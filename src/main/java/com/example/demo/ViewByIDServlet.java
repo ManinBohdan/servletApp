@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.NoSuchElementException;
 
 
 @WebServlet("/viewByIDServlet")
@@ -19,8 +20,16 @@ public class ViewByIDServlet extends HttpServlet {
         int id = Integer.parseInt(sid);
 
         Employee employee = EmployeeRepository.getEmployeeById(id);
-
+        // Refactored
+        try{
         out.print(employee);
-        out.close();
+    }
+        catch (NoSuchElementException e) {
+            System.out.println("This object doesn't exist(((((");
+        }
+        finally {
+            out.close();
+        }
+        // Refactored
     }
 }

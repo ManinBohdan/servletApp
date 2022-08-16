@@ -13,8 +13,14 @@ public class DeleteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String sid = request.getParameter("id");
-        int id = Integer.parseInt(sid);
-        EmployeeRepository.delete(id);
+        // Refactored
+        try {int id = Integer.parseInt(sid);
+            EmployeeRepository.delete(id);
+        }
+        catch (NumberFormatException nfe) {
+            System.out.println("Id can't be anything else except an int");
+        }
+        // Refactored
         response.sendRedirect("viewServlet");
     }
 }
